@@ -1,9 +1,7 @@
-<!doctype html>
 <html>
   <head>
     <title>Canvas Game</title>
     <style>
-     
     </style>
   </head>
   <body>
@@ -15,24 +13,30 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
-	  var socket = io();
-	  
-	  $("#canvasWrapper").keypress(function(e) {
-		socket.emit('keypressed', e.keyCode);
-	  });
-	  
-	  socket.on('new position', function(msg){
-		var player = JSON.parse(msg);
-		if (!player.connected) {
-			// remove player from canvas
-		} else {
-			// draw new position
-			$('#game'); // update canvas
+		var ws = new WebSocket('ws://localhost:3000');
+		 
+		ws.onopen = function (event) {
+			alert('Connection opened.');
 		}
-	  });
-	  socket.on('max reached', function(msg){
-		alert(msg);
-	  });
+
+		$("#canvasWrapper").keypress(function(e) {
+			var event = {type:'keypressed',data:e.keyCode};
+			ws.send(JSON.stringify(event));
+		});
+	  
+		ws.on('new position', function(data, flags) {
+			var player = JSON.parse(data); 
+			if (!player.connected) {
+				// remove player from canvas
+			} else {
+				// draw new position
+				$('#game'); // update canvas
+			}
+		});
+	  
+		ws.on('max reached', function(data, flags) {
+			alert(data);
+		});
 	</script>
   </body>
 </html>

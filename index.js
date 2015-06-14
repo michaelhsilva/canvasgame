@@ -1,14 +1,32 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var allClients = [];
+var WebSocketServer = require('ws').Server
+  , wss = new WebSocketServer({ port: 3000 });
 
 // game variables
 var players = [];
 players[0] = {id:1, x:0,  y:0,  connected:false,color:'blue',clientId:-1};
 players[1] = {id:2, x:99, y:0,  connected:false,color:'red',clientId:-1};
 players[2] = {id:3, x:0,  y:59, connected:false,color:'yellow',clientId:-1};
-players[3] = {id:4, x:99, y:59, connected:false,color:'green',clientId:-1};
+players[3] = {id:4, x:99, y:59, connected:false,color:'green',clientId:-1};  
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+  });
+  console.log('someone connected');
+  ws.send('open');
+});
+
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    client.send(data);
+  });
+};
+
+/*
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var allClients = [];
 
 app.get('/', function(req, res){
   res.sendfile('index.html');
@@ -76,3 +94,4 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+*/
