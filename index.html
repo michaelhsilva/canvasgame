@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Canvas Game</title>
+    <style>
+     
+    </style>
+  </head>
+  <body>
+    <div id="canvasWrapper" style="border:1px solid;   width:1000px; height:600px;">
+		<canvas id="game" width="1000" height="600">
+			Could not create Canvas!
+		</canvas>
+	</div>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+	  var socket = io();
+	  
+	  $("#canvasWrapper").keypress(function(e) {
+		socket.emit('keypressed', e.keyCode);
+	  });
+	  
+	  socket.on('new position', function(msg){
+		var player = JSON.parse(msg);
+		if (!player.connected) {
+			// remove player from canvas
+		} else {
+			// draw new position
+			$('#game'); // update canvas
+		}
+	  });
+	  socket.on('max reached', function(msg){
+		alert(msg);
+	  });
+	</script>
+  </body>
+</html>
