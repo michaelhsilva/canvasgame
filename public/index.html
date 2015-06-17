@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Canvas Game</title>
+    <style type="text/css">
+    </style>
+  </head>
+  <body>
+    <div id="canvasWrapper" style="border:1px solid;   width:1000px; height:600px;">
+		<canvas id="game" width="1000" height="600">
+			Could not create Canvas!
+		</canvas>
+	</div>
+	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script type="text/javascript">
+		alert("window.WebSocket");
+		var ws = new WebSocket('ws://localhost:3001');
+		 
+		ws.onopen = function (event) {
+			alert('Connection opened.');
+		}
+
+		$("#canvasWrapper").keypress(function(e) {
+			var msg = {
+				type: "keypressed",
+				data: e.keyCode
+			};
+			ws.send(JSON.stringify(msg));
+		});
+	  
+		ws.onmessage = function (event) 
+	    {
+			var msg = JSON.parse(event);
+
+			switch(msg.type) {
+			case "new position":
+				var player = JSON.parse(msg.data); 
+				var myCanvas = document.getElementById("game");
+				var context = myCanvas.getContext("2d");
+				if (!player.connected) {
+					context.fillStyle = "white";
+				} else {
+					context.fillStyle = player.color;
+				}
+				context.fillRect(player.x, player.y, 10, 10);
+			  break;
+			case "max reached":
+			  alert(msg.data);
+			  break;
+			}
+		});
+	</script>
+  </body>
+</html>
