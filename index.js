@@ -26,7 +26,7 @@ players[1] = {id:2, x:49, y:0,  connected:false,color:'red',clientId:-1};
 players[2] = {id:3, x:0,  y:29, connected:false,color:'yellow',clientId:-1};
 players[3] = {id:4, x:49, y:29, connected:false,color:'green',clientId:-1};
 var allClients = [];
-var p = {id:1, x:0,  y:0,  connected:false,color:'blue',clientId:1};
+var p = {id:1, x:0,  y:0, previous_x:0, previous_y:0, connected:false,color:'blue',clientId:1};
 
 wss.broadcast = function(data) {
   wss.clients.forEach(function each(client) {
@@ -53,6 +53,8 @@ wss.on('connection', function connection(ws) {
   	switch (msg.type) {
   		case "keypressed":
   			var keypressed = parseInt(msg.data.key);
+        player.previous_x = player.x;
+        player.previous_y = player.y;
   			if (keypressed == 37) { // LEFT
   				console.log('player '+player.clientId+': LEFT');
   				if (player.x != 0)

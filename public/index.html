@@ -42,11 +42,12 @@
         var myCanvas = document.getElementById("game");
 				var context = myCanvas.getContext("2d");
 
-				if (!player['connected']) {
-					context.fillStyle = "white";
+				context.fillStyle = "white";
+        context.fillRect(player['previous_x'], player['previous_y'], 10, 10);
+				context.fillStyle = player['color'];
+				/*if (!player['connected']) {
 				} else {
-					context.fillStyle = player['color'];
-				}
+				}*/
 				context.fillRect(player['x'], player['y'], 10, 10);
 			  break;
 			case 2:
