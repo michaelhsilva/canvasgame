@@ -13,6 +13,10 @@
 	</div>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<script type="text/javascript">
+    $(function(){
+      $("#canvasWrapper").focus();
+    });
+
 		var clientId = 1;
 
 		var ws = new WebSocket('ws://localhost:3001');
