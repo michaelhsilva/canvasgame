@@ -62,8 +62,8 @@
           case 2: // max players reached
             alert(msg['data']);
             break;
-    case 3: // player disconnected
-      var player = msg['data'];
+          case 3: // player disconnected
+            var player = msg['data'];
             var myCanvas = document.getElementById("game");
             var context = myCanvas.getContext("2d");
 
