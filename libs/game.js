@@ -3,7 +3,7 @@ module.exports = app => {
     var WebSocketServer = require('ws').Server;
     var wss = new WebSocketServer({ port: 3001 });
 
-    console.log((new Date()) + ' canvasgame app listening at %d', 3001);
+    console.log((new Date()) + ' canvasgame Web Socket server listening at %d', 3001);
 
     // game variables
     var players = [];
