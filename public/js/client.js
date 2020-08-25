@@ -29,7 +29,7 @@
       var ws = new WebSocket('ws://'+hostnameOrIP+':3001');
 
       ws.onopen = function (event) {
-          //alert('Connection opened.');
+          // Connection opened
       }
 
       $("#canvasWrapper").keydown(function(e) {
