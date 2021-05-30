@@ -5,7 +5,7 @@
   "dependencies": {
     "express": "^4.12.4",
     "nodemon": "^2.0.4",
-    "ws": "^7.3.1"
+    "ws": "^7.4.6"
   },
   "main": "index.js",
   "scripts": {
