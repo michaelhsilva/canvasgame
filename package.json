@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "my first socket.io app",
   "dependencies": {
-    "express": "^4.12.4",
+    "express": "^4.17.3",
     "nodemon": "^2.0.4",
     "ws": "^7.3.1"
   },
